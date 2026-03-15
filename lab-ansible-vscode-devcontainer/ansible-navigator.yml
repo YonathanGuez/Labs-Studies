@@ -1,0 +1,10 @@
+ansible-navigator:
+  execution-environment:
+    enabled: false
+    image: quay.io/ansible/creator-ee:latest
+    pull:
+      policy: missing
+  mode: interactive # This gives you the TUI (Text User Interface) used in the exam
+  logging:
+    level: critical
+    file: /dev/null
