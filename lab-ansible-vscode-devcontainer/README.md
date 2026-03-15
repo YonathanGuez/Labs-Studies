@@ -53,3 +53,7 @@ To ensure your environment is configured correctly, verify the tools and the Exe
 ansible-navigator doc -l
 ```
 You should see the full list of available modules provided by the quay.io/ansible/creator-ee:latest image.
+
+### 5. Tips Ansible:
+
+[Tips: Best Practice Ansible ](./Tips-ansible.md)
