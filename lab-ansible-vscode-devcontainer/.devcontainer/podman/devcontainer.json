@@ -12,5 +12,8 @@
       }
     }
   },
+  "mounts": [
+    "source=${localEnv:XDG_RUNTIME_DIR}/podman/podman.sock,target=${localEnv:XDG_RUNTIME_DIR}/podman/podman.sock,type=bind"
+  ],
   "remoteUser": "root"
 }
