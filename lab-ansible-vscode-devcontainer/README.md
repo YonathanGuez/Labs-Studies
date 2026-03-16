@@ -27,6 +27,12 @@ Ensure your project root contains the following configuration files:
 └── README.md
 ```
 
+If you are using podman you need to modify devcontainer.json in the part mounts:
+```
+  "mounts": [
+    "source=${localEnv:XDG_RUNTIME_DIR}/podman/podman.sock,target=${localEnv:XDG_RUNTIME_DIR}/podman/podman.sock,type=bind"
+  ],
+```
 ### 2. Pull the Image
 
 Before launching, pull the community development image. This is a public image and does not require any login:
