@@ -1,0 +1,2 @@
+[webservers]
+target-server ansible_user=root ansible_password=rabit 

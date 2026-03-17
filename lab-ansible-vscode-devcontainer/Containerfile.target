@@ -9,7 +9,7 @@ RUN dnf install -y openssh-server openssh-clients python3 sudo && \
 RUN ssh-keygen -A
 
 # 3. Set the root password and allow root login via SSH
-RUN echo 'root:redhat' | chpasswd && \
+RUN echo 'root:rabit' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
 # 4. Ensure SSH starts on boot (since we use /usr/sbin/init)
