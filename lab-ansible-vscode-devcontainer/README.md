@@ -27,7 +27,7 @@ Ensure your project root contains the following configuration files:
 └── README.md
 ```
 
-If you are using podman you need to modify devcontainer.json in the part mounts:
+If you are using podman your devcontainer.json need to use mounts:
 ```
   "mounts": [
     "source=${localEnv:XDG_RUNTIME_DIR}/podman/podman.sock,target=${localEnv:XDG_RUNTIME_DIR}/podman/podman.sock,type=bind"
@@ -63,3 +63,74 @@ You should see the full list of available modules provided by the quay.io/ansibl
 ### 5. Tips Ansible:
 
 [Tips: Best Practice Ansible ](./Tips-ansible.md)
+
+### 6. Simulation Environment Setup:
+
+To simulate a real-world RHEL environment within Podman, we use a custom-built managed node that supports systemd and SSH. This allows for full service management and user configuration testing.
+
+1) Build the Target Image:
+```
+podman build -t my-ansible-target -f Containerfile.target .
+```
+
+2) Establish the Network:
+```
+podman network create ansible-lab
+```
+
+3) Connect the DevContainer:
+```
+.....
+  "runArgs": [
+    "--network=ansible-lab",
+    "--privileged" // Often needed to run ansible-navigator or nested podman
+  ],
+....
+```
+
+4) Launch the Managed Node:
+```
+podman run -d \
+  --name target-server \
+  --network ansible-lab \
+  --privileged \
+  my-ansible-target
+```
+
+5) Configure Ansible
+
+Create inventory:
+```
+[webservers]
+target-server ansible_user=root ansible_password=redhat 
+```
+
+Create ansible.cfg:
+```
+[defaults]
+collections_path=/root/.ansible/collections:/usr/share/ansible/collections
+inventory=./inventory
+remote_user=devops
+host_key_checking=false
+roles_path=/root/.ansible/roles:/usr/share/ansible/roles:/etc/ansible/roles
+
+[privilege_escalation]
+become=True
+become_ask_pass=False
+become_method=sudo
+become_user=root
+
+```
+
+6) Verify Connectivity:
+```
+ansible webservers -m ping 
+```
+
+### 💡 Troubleshooting: Remote Host Identification
+If the target container is deleted and recreated, its SSH fingerprint will change. Even with host_key_checking = false, your local shell may block the connection if the old key is saved.
+
+Fix: Remove the stale entry from your known hosts:
+```
+rm /root/.ssh/known_hosts
+```

@@ -1,0 +1,19 @@
+# Use the official AlmaLinux 9 Init image as the base
+FROM docker.io/almalinux/9-init
+
+# 1. Install necessary packages
+RUN dnf install -y openssh-server openssh-clients python3 sudo && \
+    dnf clean all
+
+# 2. Generate SSH host keys
+RUN ssh-keygen -A
+
+# 3. Set the root password and allow root login via SSH
+RUN echo 'root:redhat' | chpasswd && \
+    sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# 4. Ensure SSH starts on boot (since we use /usr/sbin/init)
+RUN systemctl enable sshd
+
+# Standard port for SSH
+EXPOSE 22

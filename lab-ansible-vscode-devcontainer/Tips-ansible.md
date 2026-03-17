@@ -19,7 +19,6 @@ collections_path=./my-collection:/usr/share/ansible/collections
 inventory=./inventory
 remote_user=devops
 roles_path=./my-roles:/usr/share/ansible/roles:/etc/ansible/roles
-host_key_checking=False
 
 [privilege_escalation]
 become=True
