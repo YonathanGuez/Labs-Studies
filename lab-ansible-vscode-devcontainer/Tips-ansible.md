@@ -68,3 +68,51 @@ Test the connection :
 ```
 ansible all -m ping
 ```
+
+## test install Role :
+
+create requierments.yml
+```
+- src: https://galaxy.ansible.com/download/openafs_contrib-openafs-1.9.0.tar.gz
+  name: openafs-devops-wala
+```
+install
+```
+ansible-galaxy role install -r requirements.yml -p /home/devops/ansible/roles
+```
+
+Check:
+```
+ansible-galaxy role list -p /home/devops/ansible/roles
+```
+
+## System Role configuration NTF
+Objectif: 
+Install the rhel-system-roles package & create a playbook /home/devops/ansible/timesync.yaml
+ Runs on ALL managed nodes
+ Uses the timesync role 
+ Configures the role to use the currently active NTF provider (more on this later)
+ Configure the role to use the time server 172.256.254.254 or classroom.example.com
+ Configure the role to enable the iburst parameter
+
+rhel-system-roles package not possible with my fedora so this is the same (this is the install with the doc)
+```
+dnf install -y linux-system-roles --setopt=tsflags=
+```
+
+check example in :cat /usr/share/doc/linux-system-roles/timesync/README.md
+```
+- name: Manage timesync with 3 servers
+  hosts: targets
+  vars:
+    timesync_ntp_servers:
+      - hostname: foo.example.com
+        iburst: true
+      - hostname: bar.example.com
+        iburst: true
+  roles:
+    - linux-system-roles.timesync
+```
+
+ansible-playbook  timesync.yaml --syntax-check
+check : chonyc sources -v

@@ -134,3 +134,16 @@ Fix: Remove the stale entry from your known hosts:
 ```
 rm /root/.ssh/known_hosts
 ```
+
+#### Tools with this image :
+
+Example install collection:
+```
+ansible-galaxy collection install fedora.linux_system_roles -p /home/student/ansible/collections
+```
+
+#### Configuration ansible-navigator.yml:
+
+```
+ansible-navigator settings --sample > ansible-navigator.yml
+```

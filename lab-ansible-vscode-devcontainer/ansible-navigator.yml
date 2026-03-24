@@ -8,3 +8,5 @@ ansible-navigator:
   logging:
     level: critical
     file: /dev/null
+  playbook-artifact: 
+    enable: false # don t save Archive 
