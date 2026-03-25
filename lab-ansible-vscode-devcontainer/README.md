@@ -22,6 +22,10 @@ Ensure your project root contains the following configuration files:
 ```text
 .
 ├── .devcontainer/
+|   └── docker/
+|         └── devcontainer.json
+|   └── podman/
+|         └── devcontainer.json
 │   └── devcontainer.json
 ├── ansible-navigator.yml
 └── README.md
