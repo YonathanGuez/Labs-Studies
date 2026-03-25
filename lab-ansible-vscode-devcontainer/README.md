@@ -44,6 +44,10 @@ Before launching, pull the community development image. This is a public image a
 ```
 docker pull ghcr.io/ansible/community-ansible-dev-tools:latest
 ```
+or 
+```
+podman pull ghcr.io/ansible/community-ansible-dev-tools:latest
+```
 ### 3. Launch the Environment
 
 Reload your workspace into the container:
