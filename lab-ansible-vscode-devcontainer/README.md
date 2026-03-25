@@ -76,10 +76,18 @@ To simulate a real-world RHEL environment within Podman, we use a custom-built m
 ```
 podman build -t my-ansible-target -f Containerfile.target .
 ```
+or
+```
+docker build -t my-ansible-target -f Containerfile.target .
+```
 
 2) Establish the Network:
 ```
 podman network create ansible-lab
+```
+or
+```
+docker network create ansible-lab
 ```
 
 3) Connect the DevContainer:
@@ -94,11 +102,11 @@ podman network create ansible-lab
 
 4) Launch the Managed Node:
 ```
-podman run -d \
-  --name target-server \
-  --network ansible-lab \
-  --privileged \
-  my-ansible-target
+podman run -d  --name target-server --network ansible-lab --privileged my-ansible-target
+```
+or
+```
+docker run -d  --name target-server --network ansible-lab --privileged my-ansible-target
 ```
 
 5) Configure Ansible
